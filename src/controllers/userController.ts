@@ -76,7 +76,7 @@ export const login = async (
       });
     }
 
-    const isMatch = await (user as any).comparePassword(password);
+    const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
       return res.status(401).json({

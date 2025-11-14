@@ -48,7 +48,7 @@ export const updateTodo = async (
   try {
     const id = req.params.id;
     const updatedTodo = await Todo.findByIdAndUpdate(id, req.body);
-    if (!updateTodo) {
+    if (!updatedTodo) {
       return res.status(404).json({
         success: false,
         message: "Todo not updated something went wrong!",

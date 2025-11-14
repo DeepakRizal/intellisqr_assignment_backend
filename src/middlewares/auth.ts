@@ -6,6 +6,7 @@ export interface AuthRequest extends Request {
   user?: any;
 }
 
+// middleware to protect unauthenticated users from performing todo actions
 export const protect = async (
   req: AuthRequest,
   res: Response,
