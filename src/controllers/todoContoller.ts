@@ -1,14 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import Todo from "../models/todoModel";
+import { AuthRequest } from "../middlewares/auth";
 
 // create todo handler
 export const createTodo = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const newTodo = await Todo.create(req.body);
+    const newTodo = await Todo.create({ ...req.body, userId: req.user._id });
 
     return res.status(201).json({
       success: true,
@@ -21,12 +22,13 @@ export const createTodo = async (
 
 // Handler to get all the todos
 export const getAllTodos = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const allTodos = await Todo.find({});
+    console.log(req.user);
+    const allTodos = await Todo.find({ userId: req.user._id });
 
     return res.status(200).json({
       success: true,
@@ -39,7 +41,7 @@ export const getAllTodos = async (
 
 //Handler to update a todo
 export const updateTodo = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -63,7 +65,7 @@ export const updateTodo = async (
 
 // handler to delete  a todo
 export const deleteTodo = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {

@@ -4,11 +4,13 @@ export interface ITodo extends Document {
   title: string;
   completed: boolean;
   createdAt: Date;
+  userId: String;
 }
 
 const TodoSchema = new Schema<ITodo>({
   title: { type: String, required: [true, "Title is required!"] },
   completed: { type: Boolean, default: false },
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: {
     type: Date,
     default: Date.now,
