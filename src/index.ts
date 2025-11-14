@@ -1,17 +1,15 @@
-import express, {
-  type NextFunction,
-  type Request,
-  type Response,
-} from "express";
-import cors from "cors";
 import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express";
+import cors from "cors";
 import { connectDB } from "./config/db";
 import todoRouter from "./routes/todoRoutes";
 import userRouter from "./routes/userRoutes";
+import authRouter from "./routes/authRoutes";
 import errorHanlder from "./middlewares/errorHanlder";
 
 // Load variables from the .env file into process.env
-dotenv.config();
 
 //Initialising express app
 const app = express();
@@ -27,6 +25,7 @@ connectDB();
 
 app.use("/todo", todoRouter);
 app.use("/user", userRouter);
+app.use("/auth", authRouter);
 
 //global error handling middleware
 app.use(errorHanlder);
